@@ -1,0 +1,23 @@
+BigInteger BigInteger::operator * (BigInteger & left, BigInteger & right)
+{
+    string result_str;
+    int N = left.size()-1;
+    int M = right.size()-1;
+    result_str.resize(N+M);
+
+    for(int i=N-1 ;i>=0; --i)
+    {
+        //maradek=0;
+        for(int j=M-1; j>=0; --j)
+        {
+            result_str[i+j+1] += (left.number[i]-'0')*(right.number[j]-'0')+'0';
+        }
+    }
+    for(int i=N+M-1; i>0; --i)
+    {
+        result_str[i-1] += (ered[i]-'0')/10;
+        result_str[i] = (ered[i]-'0')%10;
+    }
+
+    cout<<"result: "<<result_str;
+}

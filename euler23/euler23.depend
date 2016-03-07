@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1437488981 source:c:\users\otthoni\documents\euler23\main.cpp
+	<iostream>
+	<cmath>
+

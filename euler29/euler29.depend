@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1434204433 source:c:\users\otthoni\documents\euler29\main.cpp
+	<iostream>
+	<vector>
+	<algorithm>
+	<set>
+	<cmath>
+

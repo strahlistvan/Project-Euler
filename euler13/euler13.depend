@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1426697464 source:/home/strahl/Dokumentumok/euler13/bignum.cpp
+	<iostream>
+	<string>
+	<vector>
+	"bignum.h"
+
+1426697300 source:/home/strahl/Dokumentumok/euler13/main.cpp
+	<iostream>
+	<fstream>
+	"bignum.h"
+
+1426697306 /home/strahl/Dokumentumok/euler13/bignum.h
+	<iostream>
+	<string>
+	<vector>
+

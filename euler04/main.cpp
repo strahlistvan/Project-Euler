@@ -1,0 +1,68 @@
+/** A legnagyobb palindrom szamot keresi meg, ami ket haromjegyu szam szorzatakent allithato elo. */
+#include <iostream>
+#include <sstream>
+#include <string>
+using namespace std;
+
+bool is_palindrome(string text);
+string num2string(int num);
+
+int main(int argc, char ** argv)
+{
+    int max = 0;
+    for (int i=100; i<1000; ++i)
+    {
+        for (int j=100; j<1000; ++j)
+        {
+        	  int prod = i*j;
+           string prod_str = num2string(prod);
+           if (is_palindrome(prod_str) && prod>max )
+               max = prod;
+        }
+    }
+    cout<<"Max: "<<max<<endl;
+    return 0;
+}
+
+/*string num2string(int num)
+{
+   stringstream ss;
+   ss<<num;
+   return ss.str();
+}*/
+
+string num2string(int num)
+{
+	string result = "";
+	while(num > 0)
+	{
+		result.push_back(num%10+'0');
+		num/=10;
+	}
+	//string megforditasa:
+	int N = result.size();
+	for (int i=0; i<N/2; ++i)
+	{
+		char tmp = result[i];
+		result[i] = result[N-1-i];
+		result[N-1-i] = tmp;
+	}
+	return result;
+}
+
+
+bool is_palindrome(string text)
+{
+	return text==string(text.rbegin(), text.rend());
+}
+
+/*bool is_palindrome(string text)
+{
+    int N = text.size();
+    for (int i=0; i<N/2; ++i)
+    {
+        if (text[i]!=text[N-1-i])
+            return 0;
+    }
+    return 1;   
+} */

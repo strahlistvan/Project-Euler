@@ -1,0 +1,66 @@
+Project Euler 04 - Indul a görög aludni!
+
+  Ma egy újabb Project Euleres feladatot fogok bemutatni, nevezetesen a 4.-et. A feladat, hogy keressük meg a legnagyobb palindromszámot, amely 2 háromjegyű szám szorzataként előállítható. A megvalósítás nyelve ezúttal C++ lesz, mivel ki fogom használni a C++ néhány nyelvi sajátosságát a feladat megvalósításának megkönnyítése érdekében.  
+ Mi is az a palindrom? 
+ A palindrom olyan szó vagy szókapcsolat, amely visszafelé olvasva is ugyanazt jelenti. A palindromszámok ezzel analóg módon olyan (10-es számrendszerbeli) számok, amelyek számjegyeit visszafelé olvasva ugyanaz az értékük. Vagyis egy $k$ számjegyű (tízes számrendszerbeli) $\sum_{i=0}^k a_i \cdot 10^i$ szám akkor és csak akkor palindrom, ha $a_i = a_{k-i}$ minden $a_i (i=0...k)$ számjegyre. (További információ: Wikipédia) 
+
+ A programom során előállítom az összes háromjegyű szám szorzatát. Mivel 900 darab háromjegyű szám van, ezért ezt $900\times900 = 180000$ szorzás árán tehetem meg, tehát négyzetes futásidőben. Az így kapott 6/7 jegyű számokról pedig eldöntjük, hogy palindróm-e. 
+ Tehát a kód "váza": 
+
+#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool is_palindrome(string text);
+string num2string(int num);
+
+int main(int argc, char ** argv)
+{
+    int max = 0;
+    for (int i=100; i&lt;1000; ++i)
+    {
+        for (int j=100; j&lt;1000; ++j)
+        {
+       	   int prod = i*j;
+           string prod_str = num2string(prod);
+           if (is_palindrome(prod_str) && prod&gt;max )
+               max = prod;
+        }
+    }
+    cout&lt;&lt;&quot;Max: &quot;&lt;&lt;max&lt;&lt;endl;
+    return 0;
+}
+
+ Az #include sorok hasonlóak a hagyományos C programok include soraihoz. A program során célszerű használni az std névteret, ugyanis a C++ standard objektumai, templatei, algoritmusai (pl.: cout, cin, string, vector, sort...) az std-n keresztül érhetők el. A main függvény előtt, 2 függvény prototípusa található, amire később visszatérek. A mainben pedig előállítjuk az összes 3-jegyű szám (i és j) szorzatát, és (némi konvertálás után) teszteljük, hogy palindrom-e a szám, valamint, hogy a palindromszorzat nagyobb-e a jelenlegi maximumnál (maximumkiválasztás) 
+ De hogyan is nézzük meg, hogy a szám palindrom-e? 
+ Mint már leírtam, a ($k$ jegyű)palindromszámok első számjegye megegyezik az utolsó ($k.$) jeggyel, az $2.$ a $k-1.$ jeggyel, és így tovább. Ahhoz, hogy az egyes számjegyeire egyenként tudjunk hivatkozni, jó megoldás lehet karakterlánccá (stringgé) alakítani a kívánt számot. A num2string függvény pontosan ezt teszi: 
+
+string num2string(int num)
+{
+	string result = &quot;&quot;;
+	while(num &gt; 0)
+	{
+		result.push_back(num%10+&apos0&apos);
+		num/=10;
+	}
+	//string megforditasa:
+	int N = result.size();
+	for (int i=0; i&lt;N/2; ++i)
+	{
+		char tmp = result[i];
+		result[i] = result[N-1-i];
+		result[N-1-i] = tmp;
+	}
+	return result;
+}
+
+ A függvény 2 részből áll. Az egyikben a kapott paramétert num addig osztja 10-zel, amíg nagyobb nullánál, és a jelenlegi szám utolsó számjegyét (num%10) hozzáfűzi a jelenlegi (kezdetben üres) result eredménystringhez. A +'0' részre azért van szükség, hogy ne a számot, hanem az adott számkaraktert fűzze a string végére. Ezért ell kell tolnunk a 0 karakter ASCII-kódjával (48). Vagyis 0+'0'='0'(48), 1+'0'='1' (49) ... 9+'0'='9'(57). Viszont az így kapott karakterlánc  fordítottja az eredeti számnak . Ezért meg kell fordítani a stringet. A megfordítást pedig úgy végzi, hogy a 0. karaktert az utolsóval (N-1.) cseréli ki, az 1.-t az N-2.-kell, és így tovább, N/2-ig.  Miért N/2-ig? Ugyanis ha N-ig menne, akkor az első N/2 lépésben megcserélné, majd az utána jövő N/2 lépésben visszacserélné a karaktereket, így tulajdonképpen nem csinálna semmit. 
+Utolsó lépésben pedig a függvény visszatér a jól megérdemelt eredménnyel.
+
+ De van a konvertálásra C++-ban egy egyszerűbb mód is, ahol felhasználjuk a C++ streameket. Ezért kellett az #include   a program elejére. A konvertálás egyszerűbb módja: 
+
+string num2string(int num)
+{
+   stringstream ss;
+   ss

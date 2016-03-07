@@ -1,0 +1,47 @@
+A következő bejegyzésben ismét egy Project Euler feladányból indulok ki, nevezetesen a 6.-ból. A feladat konkrétan a 100 alatti természetes számok összegének négyzetének, és négyzeteik összegének különbsége. Két módszert mutatok be a megoldására, egy mechanikus számítógépes módszert, illetve egy akár papíron is elvégezhető módszert. Bemutatok két kapcsolódó matematikai összefüggést, teljes indukciós bizonyítással.
+
+A feladat: adott egy összeg: $1^2 + 2^2 + ... + 100^2 = \sum_{i=1}^100 i $ illetve egy összeg négyzete: $(1+2+...+100)^2 = (\sum_{i=1}^100 i^2 )^2$. A feladat: számoljuk ki a második és az első különbségét! Számítógéppel ez igen egyszerű feladat: összegezzük a számokat, majd a számok négyzeteit. A számok összegét emeljük négyzetre, és vonjuk ki belőle a négyzetösszeget. A C program kódja:
+
+<main2.c kódja ################# !!!!!!!!!!!!!!!!!!!>
+
+Tekintsünk kicsit a program hatékonyságára: az 1-N közötti számok összeadásához N-1 összeadás szükséges mindkét esetben, a négyzetre emelésekhez pedig N darab szorzás. Vagyis $2(N-1)+N ~ \mathcal{O}(N)$, vagyis a bemenő adatokkal egyenesen arányos a műveletigénye, lineáris futásidejű. (100 adatra 298 művelet, 1000 adatra 2998, és így tovább...)
+
+Ismert azonban két matematikai összefüggés, amellyel segítségével ugyanannyi művelettel bármekkora számra kiszámíthatjuk a fenti összegeket, akár gép nélkül, papíron is: nevezetesen: 
+\[
+1+2+..+n = \sum_{i=1}^n i = \frac{n(n-1)}{2}  \\
+valamint \\
+1^2+2^2+...+n^2 = \sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}$ 
+\]
+Vagyis a jobb oldalba $n$ helyére 100-at írva 3 szorzással és 2 osztással tetszőlegesen nagy számra kiszámíthatjuk a keresett összegeket, akár számítógép nélkül is! Ha azonban lusták vagyunk számolni, írhatunk hozzá valami ehhez hasonló programot:
+
+<main.c kódja ################# !!!!!!!!!!!!!!!!!!!>
+
+Az eredmény mindkét esetben ugyanaz: 
+<pre> 
+Az elso 100 szam osszegenek negyzete - Az elso 100 negyzetszam osszege = 25164150</pre !!!!!!!!!!!!!>
+
+Viszont honnan tudjuk, hogy a két felhasznált formula minden természetes számra működik? A bizonyításához felhasználhandó a teljes indukció elve, amely szerint ha egy állítás igaz $n=1$-re, és valamely $n$ egész számra, akkor minden $n \in \mathbb{N}$ természetes számra teljesül az állítás!
+
+Az $\sum_{i=1}^n i^2 = \frac{n(n+1)(2n+1)}{6}$ összefüggés $n=1$ számra teljesül, ugyanis $\frac{1 \cdot 2 \cdot 3}{6} = 1 = 1^2 $. Tegyük fel hát, hogy valamelyik tetszőleges $n$ esetén igaz, és igazoljuk $n+1$-re. Vagyis helyettesítsünk az összefüggésben $n$ helyére $n-1$-et, és a következőt kapjuk:
+\[
+1^2 + 2^2 + ...+n^2 + (n+1)^2 = \frac{(n+1)(n+2)(2n+3)}{6}
+\]
+A jobb oldalt kifejtve:
+\[
+\frac{(n+1)(n+2)(2n+3)}{6} = \frac{ (n^2+3n+2)(2n+3) }{6} = \frac{2n^3+3n^2+6n^2+9n+4n+6}{6} = \frac{2n^3 + 9n^2 + 13n +6}{6}
+\]
+A bal oldalon az első $n$ szám négyzetösszege található + $(n+1)^2$. Az első $n$ szám összegéről feltettük, hogy egyenlő $\frac{n(n+1)(2n+1)}{6}$-tal, helyettesítsük hát be (és használjunk némi elemi algebrát az összeadáshoz):
+\[
+1^2 + 2^2 + ...+n^2 + (n+1)^2 = \frac{n(n+1)(2n+1)}{6} + (n+1)^2 = \frac{n^2+n)(2n+1)}{6} + (n^2+2n+1) = \frac{2n^3+3n^2+n}{6} + \frac{6n^2+12n+6}{6} = \frac{2n^3 + 9n^2 + 13n +6}{6}
+\]
+A két oldal megegyezik, tehát $n+1$-re is teljesül, tehát az indukció elve szerint mindig igaz az állítás.
+
+A másik összefüggés bizonyítása is hasonló: $n=1$-re $\frac{1(1+1)}{2} = 1$ teljesül. Tegyük fel, hogy tetszőleges $n$-re  $\sum_{i=1}^n i = \frac{n(n-1)}{2} $ igaz, és nézzük meg, hogy $n+1$-et behelyettesítve
+\[
+1+2+...+n+(n+1) = \frac{(n+1)(n+2)}{2}
+\]
+még mindig teljesül-e? A bal oldalon az első $n$ szám összege látható, $n+1$-gyet hozzáadva. Az indukciós feltevés alapján ez
+\[
+  1+2+...+n+(n+1) = \frac{n(n+1)}{2} + (n+1) = \frac{n^2+n}{2} + \frac{2n+2}{2} = \frac{n^2+3n+2}{2}
+\]
+ami megegyezik a jobb oldallal, ugyanis $ \frac{(n+1)(n+2)}{2} = \frac{n^2+3n+2}{2} $. Tehát ez az összefüggés is igaz minden természetes számra.

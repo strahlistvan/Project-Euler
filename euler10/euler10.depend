@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1420054520 source:c:\users\otthoni\documents\euler10\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

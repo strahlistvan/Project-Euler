@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1432756001 source:c:\users\otthoni\documents\euler26\main.cpp
+	<iostream>
+	<iomanip>
+

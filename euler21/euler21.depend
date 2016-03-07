@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1431943023 source:c:\users\otthoni\documents\euler21\main.c
+	<stdio.h>
+	<stdlib.h>
+

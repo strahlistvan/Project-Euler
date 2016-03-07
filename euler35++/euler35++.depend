@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1434553480 source:c:\users\istvan\documents\progi\euler35++\main.cpp
+	<iostream>
+	<cstdlib>
+	<sstream>
+	<vector>
+

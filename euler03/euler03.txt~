@@ -1,0 +1,30 @@
+Ebben a bejegyzésben prímszámokról, prímfaktorizációról lesz szó, a Project Euler 3. feladatának kapcsán. A feladat egy viszonylag nagy szám (de azért 64 biten ábrázolható) szám legnagyobb prímt osztójának a megkeresése. Sokféle módszert kipróbáltam, de általában lassúnak bizonyultak már ekkora bemenetre is. Végül azonban sikerült megtalálnom egy jó módszert.
+
+Hogyan lehetne eldönteni, hogy melyik egy N szám legnagyobb prím osztója?
+
+0. Használjunk olyan matematikai programot (Pl.: Maple, MATLAB, Octave, Mathematica ...) amely képes a prímfaktorizációra :)
+1. Osszuk el minden nála kisebb prímmel, és vegyük a legnagyobbat, amivel nullát ad maradékul.
+2. Vizsgáljuk meg sorban (2-től N-ig) minden számot, hogy osztja-e N-t, és ha igen, teszteljük le, hogy prím-e.
+3. Próbáljuk meg N-t 2-vel osztani. Ha osztható 2-vel, próbáljuk megismételni. Ha nem, lépjünk a következő prímre (3), és 2 helyett vele próbáljuk ugyanezt. Addig ismételjük a módszert, amíg 1 nem marad. Ez hasonló lehet az általános iskolai módszerhez.
+
+Az első módszerrel az a baj, hogy mivel N nagy, ezért sok időt vesz igénybe az összes N alatti szám kilistázása. Erre való módszer az Eratoszthenész szitája, amely segítségével kiszűrhetjük egy bizonyos természetes számnál kisebb prímeket. Viszont az én programom a megadott N=600851475143 -ra olyan sokáig futott, hogy nem tudtam kivárni. Ráadásul viszonylag sok extra memóriát is használ a többi módszerhez képest. Így ezt a programot most nem ismertetném, talán majd egy másik bejegyzésben.
+
+A második próbálkozásom szintén lassúnak bizonyult. A program forráskódjának main függvénye:
+<kód>
+
+Az unsinged long long típus sima a 64 bites előjel nélküli számok tárolására használom, sima int típusba nem férne bele a nagy(obbacska) N. A program fő ciklusa nem egyesével lépked, hanem kettesével, mivel a kettőn kívül nincs más páros prím (N pedig határozottan nem kettőhatvány), így elegendő számnál kisebb páratlanokat végignézni. Ezért nem mindegy, hogy a szám páros vagy páratlan. Ha páros, a nála 1-gyel kisebb páratlan számtól indítom a ciklust, ha páratlan, akkor pedig a nála 2-vel kisebb, szintén páratlan számtól.
+
+A prímteszt függvény: 
+<kód prímteszt>
+
+A függvény 2 esetén igazzal tér vissza, minden egyéb páros szám esetén hamissal, csakúgy mint 2-nél kisebb (nemnegatív) szám esetén. Most, hogy megszabadultunk a páros számoktól, indíthatjuk a tesztelést 3-tól, $\sqrt(N)$-ig. Ha találtunk akár egyetlen osztót az adott számok közül, akkor nem prím. Ha végigért, nem találtunk osztót, tehát prím.
+DE: Miért elég $\sqrt(N)$-ig tesztelni?
+Ugyanis egy számelméleti tétel szerint biztosan kell lennie egy N összetett számnak olyan prímosztójának, amely $\leq \sqrt(N)$. 
+A bizonyításhoz vegyük $N=p \cdot q$ összetett számot ($p$ és $q$ prím), és tegyük fel, hogy nem igaz a tétel, vagyis $p > \sqrt(N)$ és $q > \sqrt(N)$. Ekkor összeszorozva őket $p \cdot q > \sqrt(N) \cdot \sqrt(N) $ vagyis $p \cdot q > N$, ami ellenmond azzal, hogy egyenlőek. Vagyis ilyen nem történhet meg, tehát muszáj, hogy $p \leq \sqrt(N)$ vagy $q \leq \sqrt(N) $. 
+Négyzetszám esetén, vagyis ha $p=q$, akkor egyenlőség áll fenn. 
+Vagyis elég egy számot négyzetgyökénél nem nagyobb számokkal leosztani, hogy kiderüljön, hogy nem prím. Ez nagy számoknál jelentős gyorsulást okozhat.
+
+Mégsem futott le elég gyorsan a 2. program, mivel a fő függvény még mindig túl sok lépést végez. Ezért volt szükség a 3. fajta megközelítésre:
+
+A számelmélet alaptétele szerint minden szám egyéretlműen felírható prímszámok szorzataként:
+

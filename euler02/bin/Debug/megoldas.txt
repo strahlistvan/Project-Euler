@@ -1,0 +1,1 @@
+A paros 4000000 alatti Fibonacci-szamok osszege: 4613732

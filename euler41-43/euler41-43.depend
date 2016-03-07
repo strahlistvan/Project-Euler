@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1435849590 source:c:\users\otthoni\documents\euler41-43\main.cpp
+	<iostream>
+	<cstdlib>
+	<algorithm>
+	<iomanip>
+

@@ -1,0 +1,21 @@
+A változatosság kedvéért ezúttal ismét egy Project Euleres feladatmegoldást teszek közzé. Viszont ez a feladat talán kevésbé matematikai jellegű, mint az oldalon található problémák jó része, így ebben a bejegyzésemben talán több lesz a C++-al kapcsolatos technikai apróság, mint a tényleges matematika. A feladat egyébként egy számrácsban megkeresni azt a 4 szomszédos (vízszintesen, függőlegesen vagy átlósan) számot, amelyeknek a legnagyobb a szorzata. A feladatban megadott rács:
+
+!!!!!!!!!!!!!444444444  Rács képe !!!!!!!!!!!!!!!!!!4
+
+Az algoritmus egyszerű: végig kell nézni minden négyes szomszéd szorzatát függőlegesen, vízszintesen, valamint a táblázat főátlóiban és mellékátlóiban, és mindegyik esetben egy egyszerű maximumkiválasztást végezni. Utolsó lépésben pedig az így kapott 4 maximum legnagyobbikát kiválasztva megvan a keresett szám. 
+Ezek alapján a C++ forráskód egy részlete:
+
+!!!!!!!!!!!!!444444444
+
+A main függvény előtt néhány függvény deklarációja található, illetve egy typedef kulcsszóval kezdődő sor. A typedef segítségével létrehoztam egy mtx típust, amely gyakorlatilag egy std::vector adatszerkezet, amelynek minden eleme std::vector<int> típusú ("vektor a vektorban", ami hasonlít egy 2 dimenziós tömbhöz, vagyis mátrixhoz). Ennek segítségével a továbbiakban vector< vector<int> > helyett elég mindenhová mtx-et írnom, ugyanarról az adattípusról lesz szó.
+ 
+Megjegyzés: 
+
+Hasonló hatást érhetnénk el a #define mtx vector < vector<int> >  makró használatával is, ez esetben azonban a C(++) előfordítója cserélné ki a forráskódban a a "vector < vector<int> >" karaktersorozatot "mtx"-re.
+
+Mit is csinál a program? 
+Beolvassa a rácsot egy szöveges fájlból, végignézi vízszintesen és függőlegesen a 4 legnagyobb  szomszédos szám szorzatát (ezt a két lépést összevontam a max_HV függvényben), majd ugyanígy tesz a két átlóra is. Ezzel tehát 3 maximumértékünk lesz, amiből a legnagyobbat kiírja a képernyőre.
+
+Szöveges file olvasása
+
+ 

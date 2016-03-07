@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1427490062 source:c:\users\otthoni\documents\euler20\bignum.cpp
+	<iostream>
+	<string>
+	<vector>
+	<sstream>
+	"bignum.h"
+
+1427492251 c:\users\otthoni\documents\euler20\bignum.h
+
+1427492764 source:c:\users\otthoni\documents\euler20\main.cpp
+	<iostream>
+	"bignum.h"
+

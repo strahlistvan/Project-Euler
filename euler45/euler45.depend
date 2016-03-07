@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1438783252 source:c:\users\istvan\documents\progi\euler45\main.cpp
+	<iostream>
+	<cmath>
+

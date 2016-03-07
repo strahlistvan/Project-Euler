@@ -1,0 +1,9 @@
+A következő bejegyzésben ismét egy Project Euler feladányból indulok ki, nevezetesen a 6.-ból. A feladat konkrétan a 100 alatti természetes számok összegének négyzetének, és négyzeteik összegének különbsége. Két módszert mutatok be a megoldására, egy mechanikus számítógépes módszert, illetve egy akár papíron is elvégezhető módszert. Bemutatok két kapcsolódó matematikai összefüggést, teljes indukciós bizonyítással.
+
+A feladat: adott egy összeg: $1^2 + 2^2 + ... + 100^2 = \sum_{i=1}^100 i $ illetve egy összeg négyzete: $(1+2+...+100)^2 = (\sum_{i=1}^100 i^2 )^2$. A feladat: számoljuk ki a második és az első különbségét! Számítógéppel ez igen egyszerű feladat: összegezzük a számokat, majd a számok négyzeteit. A számok összegét emeljük négyzetre, és vonjuk ki belőle a négyzetösszeget. A C program kódja:
+
+<main2.c kódja ################# !!!!!!!!!!!!!!!!!!!>
+
+Tekintsünk kicsit a program hatékonyságára: az 1-N közötti számok összeadásához N-1 összeadás szükséges mindkét esetben, a négyzetre emelésekhez pedig N darab szorzás. Vagyis $2(N-1)+N ~ \mathcal{O}(N)$, vagyis a bemenő adatokkal egyenesen arányos a műveletigénye, lineáris futásidejű. (100 adatra 298 művelet, 1000 adatra 2998, és így tovább...)
+
+Ismert azonban két matematikai összefüggés 

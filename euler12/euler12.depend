@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1426700843 source:/home/strahl/Dokumentumok/euler12/main.c
+	<stdio.h>
+	<stdlib.h>
+
+1426714842 source:f:\euler_project\euler12\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+

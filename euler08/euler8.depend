@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1419086610 source:c:\users\otthoni\documents\euler8\main.cpp
+	<iostream>
+	<fstream>
+

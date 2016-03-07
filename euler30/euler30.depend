@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1434187043 source:c:\users\otthoni\documents\euler30\main.c
+	<stdio.h>
+	<math.h>
+
+1434187985 source:c:\users\otthoni\documents\euler30\main_general.c
+	<math.h>
+

@@ -1,0 +1,99 @@
+Project Euler 04 - Indul a görög aludni!
+
+<p style='text-align: justify'> <strong> Ma egy újabb Project Euleres feladatot fogok bemutatni, nevezetesen a 4.-et. A feladat, hogy keressük meg a legnagyobb palindromszámot, amely 2 háromjegyű szám szorzataként előállítható. A megvalósítás nyelve ezúttal C++ lesz, mivel ki fogom használni a C++ néhány nyelvi sajátosságát a feladat megvalósításának megkönnyítése érdekében. </strong> </p>
+<h4> Mi is az a palindrom? </h4>
+<p> A <strong>palindrom</strong> olyan szó vagy szókapcsolat, amely visszafelé olvasva is ugyanazt jelenti. A <strong>palindromszámok</strong> ezzel analóg módon olyan (10-es számrendszerbeli) számok, amelyek számjegyeit visszafelé olvasva ugyanaz az értékük. Vagyis egy $k$ számjegyű (tízes számrendszerbeli) $\sum_{i=0}^k a_i \cdot 10^i$ szám akkor és csak akkor palindrom, ha $a_i = a_{k-i}$ minden $a_i (i=0...k)$ számjegyre. (További információ: Wikipédia) </p>
+
+<p style='text-align: justify'> A programom során előállítom az összes háromjegyű szám szorzatát. Mivel 900 darab háromjegyű szám van, ezért ezt $900\times900 = 180000$ szorzás árán tehetem meg, tehát négyzetes futásidőben. Az így kapott 6/7 jegyű számokról pedig eldöntjük, hogy palindróm-e. </p>
+<p style='text-decoration: underline'> Tehát a kód "váza": </p>
+<pre>
+#include &lt;iostream&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+bool is_palindrome(string text);
+string num2string(int num);
+
+int main(int argc, char ** argv)
+{
+    int max = 0;
+    for (int i=100; i&lt;1000; ++i)
+    {
+        for (int j=100; j&lt;1000; ++j)
+        {
+       	   int prod = i*j;
+           string prod_str = num2string(prod);
+           if (is_palindrome(prod_str) && prod&gt;max )
+               max = prod;
+        }
+    }
+    cout&lt;&lt;&quot;Max: &quot;&lt;&lt;max&lt;&lt;endl;
+    return 0;
+}
+</pre>
+<p style='text-align: justify'> Az <strong>#include</strong> sorok hasonlóak a hagyományos C programok include soraihoz. A program során célszerű használni az std névteret, ugyanis a C++ standard objektumai, templatei, algoritmusai (pl.: cout, cin, string, vector, sort...) az std-n keresztül érhetők el. A <strong>main</strong> függvény előtt, 2 függvény prototípusa található, amire később visszatérek. A mainben pedig előállítjuk az összes 3-jegyű szám (i és j) szorzatát, és (némi konvertálás után) teszteljük, hogy palindrom-e a szám, valamint, hogy a palindromszorzat nagyobb-e a jelenlegi maximumnál (maximumkiválasztás) </p>
+<h4> De hogyan is nézzük meg, hogy a szám palindrom-e? </h4>
+<p style='text-align: justify' > Mint már leírtam, a ($k$ jegyű)palindromszámok első számjegye megegyezik az utolsó ($k.$) jeggyel, az $2.$ a $k-1.$ jeggyel, és így tovább. Ahhoz, hogy az egyes számjegyeire egyenként tudjunk hivatkozni, jó megoldás lehet <i>karakterlánccá (stringgé) alakítani</i> a kívánt számot. A <strong>num2string</strong> függvény pontosan ezt teszi: </p>
+<pre>
+string num2string(int num)
+{
+	string result = &quot;&quot;;
+	while(num &gt; 0)
+	{
+		result.push_back(num%10+&apos;0&apos;);
+		num/=10;
+	}
+	//string megforditasa:
+	int N = result.size();
+	for (int i=0; i&lt;N/2; ++i)
+	{
+		char tmp = result[i];
+		result[i] = result[N-1-i];
+		result[N-1-i] = tmp;
+	}
+	return result;
+}
+</pre>
+<p style='text-align: justify' > 
+A függvény 2 részből áll. Az egyikben a kapott paramétert <strong>num</strong> addig osztja 10-zel, amíg nagyobb nullánál, és a jelenlegi szám utolsó számjegyét (<b>num%10</b>) hozzáfűzi a jelenlegi (kezdetben üres) <b>result</b> eredménystringhez. A +&apos;0&apos; részre azért van szükség, hogy <i>ne a számot</i>, hanem az adott <i>számkaraktert</i> fűzze a string végére. Ezért ell kell tolnunk a <i>0 karakter ASCII-kódjával (48)</i>. Vagyis 0+&apos;0&apos;=&apos;0&apos;(48), 1+&apos;0&apos;=&apos;1&apos; (49) ... 9+&apos;0&apos;=&apos;9&apos;(57). Viszont az így kapott karakterlánc <i> fordítottja az eredeti számnak </i>. Ezért meg kell fordítani a stringet. A megfordítást pedig úgy végzi, hogy a 0. karaktert az utolsóval (N-1.) cseréli ki, az 1.-t az N-2.-kell, és így tovább, N/2-ig. <br /><b> Miért N/2-ig? </b>Ugyanis ha N-ig menne, akkor az első N/2 lépésben megcserélné, majd az utána jövő N/2 lépésben <i>visszacserélné</i> a karaktereket, így tulajdonképpen nem csinálna semmit.
+</p>
+
+<p style='text-align: justify' > De van a konvertálásra C++-ban egy egyszerűbb mód is, ahol felhasználjuk a C++ streameket. Ezért kellett az <b>#include <sstream> </b> a program elejére. A konvertálás egyszerűbb módja: </p>
+<pre>
+string num2string(int num)
+{
+   stringstream ss;
+   ss<<num;
+   return ss.str();
+}
+</pre>
+<p style='text-align: justify'> Itt létrehozok egy stringstream objektumot <b>ss</b> néven. Ez hasonlóan működik, mint a <b>cout</b>, viszont nem a képernyőre irányítja a tartalmat, hanem a <b>.str()</b> tagfüggvénye segítségével egy stringbe kerülhet a rá küldött tartalom, esetünkben a konvertálandó szám. <br />
+Egyszerűbb volt, nem igaz? </p>
+
+<p style='text-align: justify'> A másik hiányzó függvény azt hivatott eldönteni, hogy palindrom-e az megadott <i>szöveg</i>(!). Igen, a függvény használható tetszőleges szövegekre, nem csak számokra! Ezért is kellett a konvertálás az előbb. </p>
+<pre>
+bool is_palindrome(string text)
+{
+    int N = text.size();
+    for (int i=0; i&lt;N/2; ++i)
+    {
+        if (text[i]!=text[N-1-i])
+            return 0;
+    }
+    return 1;   
+}
+</pre>
+<p style='text-align: justify'> A függvény igazzal (1) tér vissza, ha a paraméterként átadott szöveg palindrom, és hamissal (0), ha nem az. Induljunk el a "két szélétől", és vizsgáljuk meg, hogy a két legtávolabbi karakter megegyezik-e. Vagyis ha a 0. karakter az N-1. karakterrel megegyezik, vizsgálhatjuk tovább, az 1. és az N-2. karaktert, ellenkező esetben biztosan nem palindrom. <br />
+Ha "középen találkoztak", vagyis eljutottunk N/2-ig anélkül, hogy találtunk nem megegyező karakterpárt, akkor a szöveg (szám) bizony palindrom! (Vagyis a 2. kódrészletnél a konvertálásnál <i>ebben az esetben</i> nem lett volna létfontosságú megfordítani a számot.) </p>
+<p> Viszont C++ segítségével ezt is lehet egyszerűbben! Mi lenne ugyanis, ha nem az egyes karaktereket néznénk páronként, hanem hogy a szöveg megegyezik-e a megfordítottjával. A megfordítást már megírtam a 2. kódrészletben, de van rá egyszerűbb mód is, </i>új, az eredeti string fordítottjának létrehozásával:</i> </p>
+<pre>
+bool is_palindrome(string text)
+{
+	return text==string(text.rbegin(), text.rend());
+}
+</pre>
+<p style='text-align: justify'> Itt nem történik más, mint a <b>string()</b> konstruktorának segítségével létrehozunk egy új stringet. Ennek a konstruktornak a két paramétere a string elejére, illetve végére mutató iterátor. Az új stringünk eleje pedig az eredeti <b>text</b> fordítottjának eleje <b>text.rbegin()</b>, vége pedig a fordított string vége <b>text.rend()</b>. Így nincs más dolgunk, mint visszatérni azzal a logikai értékkel, hogy egyenlő-e a két string. </p>
+
+<h4 style='text-decoration: underline'> A kapott eredmény bármelyik lehetséges függvény használatával: </h4>
+<pre> Max: 906609 </pre>
