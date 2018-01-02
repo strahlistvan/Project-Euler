@@ -27,3 +27,9 @@
 *.exe
 *.out
 *.app
+
+#Text, documents or backup files
+*.txt
+*.doc
+*.docx
+*~
