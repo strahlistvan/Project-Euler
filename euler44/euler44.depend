@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1437662122 source:c:\users\otthoni\documents\euler44\main.cpp
+	<iostream>
+	<vector>
+	<climits>
+

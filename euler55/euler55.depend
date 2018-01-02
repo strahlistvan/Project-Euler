@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1440955505 source:c:\users\otthoni\documents\euler55\main.cpp
+	<iostream>
+	<cmath>
+	<sstream>
+	"bignum.h"
+
+1435781804 source:c:\users\otthoni\documents\euler55\bignum.cpp
+	<iostream>
+	<string>
+	<vector>
+	<sstream>
+	"bignum.h"
+
+1435781851 c:\users\otthoni\documents\euler55\bignum.h
+

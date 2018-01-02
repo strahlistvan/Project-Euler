@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1437666855 source:c:\users\otthoni\documents\euler42\main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<cmath>
+

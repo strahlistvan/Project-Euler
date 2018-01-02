@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
 			number/=divider;
 			biggestFactor = divider;
 		}
-		else 
+		else
 		{
 			divider = nextPrime(divider);
 		}
@@ -43,7 +43,7 @@ int main(int argc, char ** argv)
 	 	 	result = i;
 	 	 	found = true;
 	 	 }
-	 } 
+	 }
 	 cout<<result<<endl;
     return 0;
 } */
@@ -57,11 +57,11 @@ unsigned long long nextPrime(unsigned long long num)
 
 bool isPrime(unsigned long long num)
 {
-	if (num==2) 
+	if (num==2)
 		return true;
 	if (num%2==0 || num<2)
 		return false;
-		
+
 	for (int i=3; i<=sqrt(num); i+=2)
 	{
 		if (num%i==0)
@@ -75,7 +75,7 @@ vec find_primes(unsigned long long LIMIT)
 {
     vector<bool> isPrime(LIMIT, true);
     isPrime[0] = false;
-    
+
     vec primes_back; //visszateresi vektor
     for (unsigned long long i=1; i<isPrime.size(); ++i)
     {
@@ -89,7 +89,7 @@ vec find_primes(unsigned long long LIMIT)
             }
         }
     }
-    return primes_back; 
+    return primes_back;
 }
 
 /** A szam primtenyezos felbontasa */
@@ -109,5 +109,5 @@ vec prime_factor(unsigned long long number)
         else
             ++primeIndex;
     }
-    return factor_back; 
+    return factor_back;
 }

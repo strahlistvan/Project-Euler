@@ -1,31 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define SUM 1000
+#define PERIM 1000
 
 int main()
 {
-    int a,b,c,m,n;
+    int a=0, b=0, c=0 ,m=PERIM ,n=PERIM ,k;
     char found=0;
-    for (m=SUM; m>0 &&!found; --m)
+    for (k=1; !found && m>0; ++k)
     {
-        for (n=m; n>0 && !found; --n)
+        for (m=PERIM; m>0 &&!found; m-=2)
         {
-            a=m*m-n*n;
-            b=2*m*n;
-            c=m*m+n*n;
-            if (a*a+b*b==c*c && a+b+c==SUM)
+            for (n=m-1; n>0 && !found; n-=2)
             {
-                printf("Megtalaltam a megoldast!");
-                found=1;
+                a=m*m-n*n;
+                b=2*m*n;
+                c=m*m+n*n;
+                if (a*a+b*b==c*c && a+b+c==PERIM)
+                {
+                    printf("Megtalaltam a megoldast!");
+                    found=1;
+                }
             }
         }
     }
 
-    printf("A megoldás: a=%d b=%d c=%d\n",a,b,c);
     if (!found)
        printf("Nincs ilyen\n");
-    if (a*a+b*b==c*c)
-        printf("Helyes\n");
+    else
+        printf("A megoldas: a=%d b=%d c=%d\n",a,b,c);
     printf("Szorzatuk: %d\n",a*b*c);
     return 0;
 }

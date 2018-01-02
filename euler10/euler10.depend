@@ -4,3 +4,9 @@
 	<stdlib.h>
 	<math.h>
 
+1420057190 source:f:\euler_project\euler10\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<limits.h>
+

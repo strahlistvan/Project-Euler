@@ -30,7 +30,7 @@ void permute(string notCompleted, string completed)
     if (notCompleted.size()==0)
     {
         ++counter; //szamolja a permutaciokat
-        cout<<completed<<endl;
+        //cout<<completed<<endl; //debug
         if (counter==1000000)
         {
             cout<<completed<<endl;

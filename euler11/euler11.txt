@@ -18,4 +18,26 @@ Beolvassa a rácsot egy szöveges fájlból, végignézi vízszintesen és függ
 
 Szöveges file olvasása
 
+A táblázat tárolására először is hozzunk létre egy üres szöveges fájlt. A fájl tartalmazza magát a rácsot, valamint (az egyszerűség kedvéért) a rács méreteit, szélességét és magasságát. A méreteket (20 20) célszerű a szöveg első sorába írni, közvetlenül a rács elé. A fájl olvasásához C++-ban egy új streamet kell nyitnunk, amely hasonlóan működik, mint a cin, viszont standard input (billentyűzet) helyett megadott szövegfájlból ("grid.txt") olvas. Mivel egész számokat (int) olvasunk be, nincs szükség a szóközök, sortörések, illetve a szám eleji nulla karakterek kezelésére, a C++ gondoskodik róla: whitespace (szóköz/sortörés/tabulátor) karakterig olvas, és az olvasott karaktersorozatot megpróbálja a beolvasandó típussá (int) konvertálni. Miután beolvasta a számokat, és eltárolta egy mtx típusú adatszerkezetben, visszatér a táblázattal.
+A fájl olvasó függvény:
+++++++ file olvasó !!!!!!!!!!!!!!
  
+Keresés a táblázatban
+
+A keresés algoritmusa könnyen megfogalmazható: nézzük végig az összes négyes szomszédot, szorozzuk össze őket, és válasszuk ki a legnagyobb szorzatot. Tehát vízszintesen induljuk az bal felső sarokból. Legyen a sorok indexe i=0, az oszlopoké j=0. Ekkor a legbaloldalibb négyes az $i.$ sorban a $j.$, $j+1.$, $j+2.$ és $j+3.$ elem szorzata. Amennyiben ezt végignézzük minden $i<N$-re és $j<N-4$-re (ahol most $N=20), és kiválasztjuk a szorzatok közül a legnagyobbat, megkapjuk a vízszintes szorzatok maximumát. 
+Könnyen észrevehető, hogy a függőleges irány hasonló, mindössze az indexeket kell kicserélni: vagyis i legyen az oszlopok indexe, j pedig a soroké. Tehát nem szükséges külön függvényt írni, mindössze egy új változó segítségével ki tudjuk választani a sorok és az oszlopok közül a legnagyobbat, a következő módon: 
+
+!!!!!!!!!!!!!!!!!!!!!!!!!44 max_HV !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+Az átlók vizsgálatának elve is ugyanez. Az i. sor j. oszlopából induló "főáltó-részlet" koordinátái: $(i,j), (i+1,j+1), (i+2, j+2), (i+3, j+3)$. A "mellékátló-részleteké" pedig: $(i,j), (i-1,i+1), (i-2,i+2), (i-3,j+3)$. 
+Ezek alapján a főátlókat vizsgáló függvény kódja:
+
+!!!!!!!!!!!!!!!!!4  max_mainDiag !!!!!!!!!!!!!!!!!!!!!!!44
+
+A mellékátlóké pedig: 
+
+!!!!!!!!!!!!!!!  max_minorDiag !!!!!!!!!!!!!!!!!!!!!
+
+Megjegyzés: 
+
+Ezek a függvényeket is össze lehetne vonni az előzővel, vagyis a 3 helyett elég lenne egyszer végignézni a táblázatot, és a négy maximumból kiválasztani a legnagyobbat. Ekkor azonban figyelni kell, hogy nehogy "kiindexeljünk" a táblázatból: vagyis meg kell vizsgálni, hogy a kizárólag $0$ és $N-1$ közötti sorra és oszlopra hivatkozzunk, különben hibás eredményt kapunk, amennyiben lefut a program, vagy memóriakezelési hibával le is állhat a futó programunk. Ennek a megvalósítását most nem ismertetem, az érdeklődő olvasóra bízom! :)
