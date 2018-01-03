@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1514986427 source:c:\users\strahl\documents\progi\euler_project\euler92\main.cpp
+	<iostream>
+	<cmath>
+	<ctime>
+
